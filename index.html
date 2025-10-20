@@ -333,6 +333,27 @@
     .games-close{ padding:8px 12px; border-radius: 9999px; border:1px solid var(--outline); background: rgba(255,255,255,.06); color: var(--text); font-weight:800; cursor:pointer; }
   </style>
 
+
+  <!-- Added: Improved gate modal styles -->
+  <style>
+    .gate-overlay{ position: fixed; inset:0; background: rgba(0,0,0,.6); display:none; z-index: 5000; backdrop-filter: blur(2px); }
+    .gate-modal{
+      position: fixed; top:50%; left:50%; transform: translate(-50%, -50%);
+      width: min(92vw, 520px); background: var(--glass, rgba(20,22,40,.9)); color: var(--text, #fff);
+      border:1px solid var(--outline, rgba(255,255,255,.12)); border-radius: 18px; box-shadow: 0 18px 60px rgba(0,0,0,.5);
+      padding: 18px; display:none; z-index: 5001;
+      animation: gate-pop .28s ease-out;
+    }
+    @keyframes gate-pop { from{ transform: translate(-50%,-46%) scale(.96); opacity:.5 } to{ transform: translate(-50%,-50%) scale(1); opacity:1 } }
+    .gate-header{ display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+    .gate-icon{ font-size: 1.6rem; }
+    .gate-title{ font-weight:900; font-size: 1.1rem; }
+    .gate-body{ color: var(--muted, #cbd3ff); margin-bottom: 14px; }
+    .gate-actions{ display:flex; gap:10px; justify-content:flex-end; }
+    .btn{ padding:10px 14px; border-radius: 9999px; border:1px solid var(--outline, rgba(255,255,255,.17)); background: rgba(255,255,255,.06); color:#fff; font-weight:800; cursor:pointer; }
+    .btn-primary{ background: linear-gradient(90deg, var(--accent,#8aa3ff), var(--accent-2,#77ffd9)); border-color: transparent; color:#0b0e1b; }
+  </style>
+
 </head>
 <body class="shape-hex">
   <!-- Audio -->
@@ -1222,6 +1243,68 @@
       btnMemory.addEventListener('click', ()=>{ closeMenu(); trigger('mgOpenBtn'); });
 
       document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeMenu(); });
+    })();
+  </script>
+
+
+  <!-- Added: Improved gate modal -->
+  <div class="gate-overlay" id="gateOverlay" aria-hidden="true"></div>
+  <div class="gate-modal" id="gateModal" role="dialog" aria-modal="true" aria-labelledby="gateTitle" aria-describedby="gateDesc" tabindex="-1">
+    <div class="gate-header">
+      <div class="gate-icon">🔒</div>
+      <div class="gate-title" id="gateTitle">Plus de contenu</div>
+    </div>
+    <div class="gate-body" id="gateDesc">Connecte-toi pour accéder à plus de contenu et d’expériences.</div>
+    <div class="gate-actions">
+      <button class="btn" id="gateCancel">Plus tard</button>
+      <button class="btn btn-primary" id="gateOk">Se connecter</button>
+    </div>
+  </div>
+
+
+  <!-- Added: Improved gate modal logic (replaces confirm) -->
+  <script>
+    (function gatePrompt(){
+      const overlay = document.getElementById('gateOverlay');
+      const modal = document.getElementById('gateModal');
+      const btnOk = document.getElementById('gateOk');
+      const btnCancel = document.getElementById('gateCancel');
+      const title = document.getElementById('gateTitle');
+      const desc = document.getElementById('gateDesc');
+
+      let closeCb = null;
+      let mode = 'login'; // 'login' | 'age'
+
+      function openGate(opts){
+        mode = (opts && opts.mode) || 'login';
+        title.textContent = mode === 'age' ? 'Validation d’âge' : 'Plus de contenu';
+        desc.textContent = mode === 'age'
+          ? 'Valide ton âge pour débloquer plus de contenu.'
+          : 'Connecte-toi pour accéder à plus de contenu et d’expériences.';
+
+        overlay.style.display = 'block';
+        modal.style.display = 'block';
+        modal.focus();
+      }
+
+      function closeGate(){
+        overlay.style.display = 'none';
+        modal.style.display = 'none';
+        if (typeof closeCb === 'function'){ try{ closeCb(); }catch(e){} }
+        // retour à la page principale
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      btnOk.addEventListener('click', closeGate);
+      btnCancel.addEventListener('click', closeGate);
+      overlay.addEventListener('click', closeGate);
+      document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeGate(); });
+
+      // Replace old helper used by games
+      window.ageGateAndReturn = function(cb, opts){
+        closeCb = cb || null;
+        setTimeout(() => { openGate(opts || { mode: 'login' }); }, 2000);
+      };
     })();
   </script>
 
